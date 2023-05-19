@@ -29,3 +29,9 @@ exports.updateProject = async (id, projectData) => {
     .lean()
     .exec();
 };
+
+exports.deleteProject = async (id) => {
+  return await Project.findByIdAndDelete(id)
+    .lean()
+    .exec();
+};

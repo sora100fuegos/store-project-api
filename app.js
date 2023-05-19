@@ -16,4 +16,7 @@ const connectDB = async () => {
   }
 };
 
+const server = 
+
 connectDB();
+module.exports = { app , server }

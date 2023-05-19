@@ -11,7 +11,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watch",
+    "test-coverage" : "jest --coverage",
     "start": "nodemon app.js"
+
   },
   "author": "carlos cienfuegos",
   "license": "ISC",

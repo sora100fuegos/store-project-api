@@ -50,3 +50,18 @@ describe("when calling the project service method", () => {
     expect(result).toEqual(updatedProject);
   });
 });
+
+describe("when calliung delete method") , async () => {
+
+  let id ;
+
+beforeEach (() =>
+{
+
+})
+it("it should call findByid with an id property" , async () => 
+{
+
+});
+
+}
