@@ -10,13 +10,14 @@ app.use("/projects", ProjectRoutes);
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.url);
-    app.listen(3000);
   } catch (err) {
     console.log("Failed to connect to Mongo", err);
   }
 };
 
-const server = 
+const server = app.listen(process.env.PORT, () => {
+  console.log(`Server is running in ${process.env.PORT}`);
+  connectDB();
+});
 
-connectDB();
-module.exports = { app , server }
+module.exports = { app, server };
