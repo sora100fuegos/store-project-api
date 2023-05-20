@@ -4,6 +4,8 @@ const ProjectRoutes = require("./src/routes/projects");
 const app = express();
 require("dotenv").config();
 
+
+app.use(cors());
 app.use(express.json());
 app.use("/projects", ProjectRoutes);
 

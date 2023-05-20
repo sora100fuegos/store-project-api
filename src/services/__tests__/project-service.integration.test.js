@@ -5,15 +5,14 @@ const Project = require("../../models/project");
 const mongoose = require("mongoose");
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.DATABASE_URL);
+  await mongoose.connect(process.env.url);
 });
 
 afterAll(async () => {
   await mongoose.disconnect();
 });
 
-describe("GET /projects", () => {
-  const projectOne = {
+const projectOne = {
     name: "Project one",
     projectLink: "projectone.com",
     description: "This is a first project",
@@ -31,7 +30,11 @@ describe("GET /projects", () => {
     tools: ["HTML", "Python"],
   };
 
+describe("GET /projects", () => {
+  
+
   it("should return all projects in database", async () => {
+    
     await Project.deleteMany();
     await Project.create(projectOne);
     await Project.create(projectTwo);
@@ -47,6 +50,7 @@ describe("GET /projects", () => {
       expect.arrayContaining([expect.objectContaining(projectOne)]),
       expect.arrayContaining([expect.objectContaining(projectTwo)])
     );
+    await Project.deleteMany();
   });
 });
 
