@@ -1,13 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const ProjectRoutes = require("./src/routes/projects");
+const ItemRoutes = require("./src/routes/items");
 const app = express();
 require("dotenv").config();
 const cors = require("cors");
 
 app.use(cors());
 app.use(express.json());
-app.use("/projects", ProjectRoutes);
+app.use("/items", ItemRoutes);
 
 const connectDB = async () => {
   try {

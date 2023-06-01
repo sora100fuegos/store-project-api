@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../../../app").app;
-const Project = require("../../models/project");
+const Item = require("../../models/item");
 
 const mongoose = require("mongoose");
 
@@ -12,62 +12,58 @@ afterAll(async () => {
   await mongoose.disconnect();
 });
 
-const projectOne = {
-    name: "Project one",
-    projectLink: "projectone.com",
-    description: "This is a first project",
-    overview: "a brief overview of the project",
+const ItemOne = {
+    name: "milk ",
+    description: "This is an example item",
+    price : 20.90,
     imageUrl: "projectone.com/image.png",
-    tools: ["HTML", "CSS", "Java"],
   };
 
-  const projectTwo = {
-    name: "Project two",
-    projectLink: "projecttwo.com",
-    description: "This is the second project",
-    overview: "a brief overview of the project",
-    imageUrl: "projecttwo.com/image.png",
-    tools: ["HTML", "Python"],
+  const ItemTwo = {
+    name: "pencils",
+    description: "This is an example item",
+    price : 20.90,
+    imageUrl: "projectone.com/image.png",
   };
 
-describe("GET /projects", () => {
+
+describe("GET / items", () => {
   
 
   it("should return all projects in database", async () => {
     
-    await Project.deleteMany();
-    await Project.create(projectOne);
-    await Project.create(projectTwo);
+    await Item.deleteMany();
+    await Item.create(ItemOne);
+    await Item.create(ItemTwo);
 
-    const response = await request(app).get("/projects");
+    const response = await request(app).get("/items");
     expect(response.status).toBe(200);
 
-    const projects = response.body.projects;
+    const items = response.body.items;
 
-    expect(Array.isArray(projects)).toBe(true);
-    expect(projects.length).toEqual(2);
-    expect(projects).toEqual(
-      expect.arrayContaining([expect.objectContaining(projectOne)]),
-      expect.arrayContaining([expect.objectContaining(projectTwo)])
+    expect(Array.isArray(items)).toBe(true);
+    expect(items.length).toEqual(2);
+    expect(items).toEqual(
+      expect.arrayContaining([expect.objectContaining(ItemOne)]),
+      expect.arrayContaining([expect.objectContaining(ItemTwo)])
     );
-    await Project.deleteMany();
+    await Item.deleteMany();
   });
 });
 
-describe("POST /projects", () => {
+describe("POST /items", () => {
     it("should create a new projects and return a created status code", async () => {
-      const response = await request(app).post("/projects").send(projectOne);
+      const response = await request(app).post("/items").send(ItemOne);
   
       expect(response.statusCode).toBe(201);
-      expect(response.body.projectSaved).toEqual(
+      expect(response.body.itemSaved).toEqual(
         expect.objectContaining({
           _id: expect.any(String),
           name: projectOne.name,
-          projectLink: projectOne.projectLink,
           description: projectOne.description,
-          overview: projectOne.overview,
+          price: projectOne.overview,
           imageUrl: projectOne.imageUrl,
-          tools: projectOne.tools,
+    
         })
       );
   
@@ -75,10 +71,10 @@ describe("POST /projects", () => {
     });
   
     it("should return a 400 code and an error message when required fields are missing", async () => {
-      const { overview, ...incompleteProject } = projectOne;
+      const { overview, ...incompleteProject } = ItemOne;
   
       const response = await request(app)
-        .post("/projects")
+        .post("/items")
         .send(incompleteProject);
   
       expect(response.statusCode).toBe(400);

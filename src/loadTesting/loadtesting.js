@@ -14,7 +14,7 @@ export let options = {
 };
 
 function getProjects() {
-  let response = http.get("http://localhost:3000/projects");
+  let response = http.get("http://localhost:3001/projects");
   const output = check(response, {
     "status is 200": (response) => {
       return response.status === 200;

@@ -1,10 +1,10 @@
-const ProjectService = require("../services/projects");
+const ItemService = require("../services/items");
 
-exports.getProjects = async (req, res) => {
+exports.getItems = async (req , res) => {
   try {
-    const projects = await ProjectService.getProjects();
+    const items = await ItemService.getItems();
     res.json({
-      projects: projects,
+      items: items,
     });
   } catch (err) {
     console.error("err", err);
@@ -14,11 +14,11 @@ exports.getProjects = async (req, res) => {
   }
 };
 
-exports.getProjectById = async (req, res) => {
+exports.getItemById = async (req, res) => {
   try {
-    let project = await ProjectService.getProjectById(req.params.id);
+    let item = await ProjectService.getItemById(req.params.id);
     res.json({
-      project: project,
+      item: item,
     });
   } catch (err) {
     console.error("err", err);
@@ -29,12 +29,12 @@ exports.getProjectById = async (req, res) => {
 };
 
 
-exports.createProject = async (req, res) => {
+exports.createItem = async (req, res) => {
   try {
-    let projectSaved = await ProjectService.createProject(req.body);
+    let itemSaved = await ItemService.createItem(req.body);
     res.status(201).json({
-      message: "Project created",
-      projectSaved: projectSaved,
+      message: "Item created",
+      itemSaved: itemSaved,
     });
   } catch (err) {
     console.error("err", err);
@@ -45,12 +45,12 @@ exports.createProject = async (req, res) => {
 };
 
 
-exports.updateProject = async (req, res) => {
+exports.updateItem = async (req, res) => {
     try {
     const  { id } = req.params;
 
-      const  updatedproject  = await ProjectService.updateProject(id,req.body);
-      res.status(200).json(updatedProject);
+      const  updateditem  = await ItemService.updateItem(id,req.body);
+      res.status(200).json(updateditem);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal error" });
@@ -58,11 +58,11 @@ exports.updateProject = async (req, res) => {
   };
 
 
-  exports.deleteProject = async (req, res) => {
+  exports.deleteItem = async (req, res) => {
     try {
     const  { id } = req.params;
 
-     await ProjectService.deleteProject(id,req.body);
+     await ItemService.deleteItem(id,req.body);
       res.status(204).json();
     } catch (error) {
       console.error(error);
