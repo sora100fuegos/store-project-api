@@ -59,19 +59,20 @@ describe("POST /items", () => {
       expect(response.body.itemSaved).toEqual(
         expect.objectContaining({
           _id: expect.any(String),
-          name: projectOne.name,
-          description: projectOne.description,
-          price: projectOne.overview,
-          imageUrl: projectOne.imageUrl,
+          name: ItemOne.name,
+          description: ItemOne.description,
+          price: ItemOne.price,
+          imageUrl: ItemOne.imageUrl,
     
         })
       );
   
-      await Project.findByIdAndDelete(response.body.projectSaved._id);
+      await Item.findByIdAndDelete(response.body.itemSaved._id);
     });
   
     it("should return a 400 code and an error message when required fields are missing", async () => {
-      const { overview, ...incompleteProject } = ItemOne;
+      const { price, ...incompleteProject } = ItemOne;
+      console.log(incompleteProject);
   
       const response = await request(app)
         .post("/items")
